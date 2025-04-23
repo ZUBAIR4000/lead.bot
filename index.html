@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lead Bot - Commands</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Heroicons -->
+  <script src="https://unpkg.com/heroicons@1.0.6/dist/outline.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    /* Animated gradient background */
+    .gradient-bg {
+      background: linear-gradient(270deg, #1a1a2e, #16213e, #0f3460, #53354a);
+      background-size: 800% 800%;
+      animation: GradientAnimation 15s ease infinite;
+    }
+    @keyframes GradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body class="gradient-bg text-white min-h-screen">
+  <!-- Navbar -->
+  <nav class="container mx-auto p-6 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <img src="https://via.placeholder.com/32" alt="Bot Avatar" class="rounded-full">
+      <span class="text-2xl font-bold">Lead</span>
+    </div>
+    <ul class="hidden md:flex space-x-6">
+      <li class="cursor-pointer hover:text-blue-400">Features</li>
+      <li class="cursor-pointer hover:text-blue-400">Information</li>
+      <li class="cursor-pointer text-blue-400 font-semibold">Commands</li>
+      <li class="cursor-pointer hover:text-blue-400">Status</li>
+    </ul>
+    <button class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg flex items-center space-x-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M20 3H4a1 1 0 00-1 1v16l4-4h13a1 1 0 001-1V4a1 1 0 00-1-1z" />
+      </svg>
+      <span>Login with Discord</span>
+    </button>
+    <!-- Mobile menu icon -->
+    <div class="md:hidden">
+      <button id="menu-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-6">
+    <h1 class="text-4xl font-bold mb-2">Commands</h1>
+    <p class="text-gray-300 mb-6">Explore all available commands and their usage</p>
+
+    <!-- Controls -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-4 md:space-y-0">
+      <input id="search" type="text" placeholder="Search commands..." class="w-full md:w-1/3 p-3 rounded-lg bg-gray-800 placeholder-gray-500 focus:outline-none" />
+      <div>
+        <select id="category-filter" class="p-3 rounded-lg bg-gray-800 focus:outline-none">
+          <option value="All">All Categories</option>
+          <option value="Administration">Administration</option>
+          <option value="Utility">Utility</option>
+          <option value="Fun">Fun</option>
+          <option value="Moderation">Moderation</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Commands Grid -->
+    <div id="command-list" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </div>
+
+  <script>
+    const commands = [
+      { name: "ban", icon: "ban", description: "Ban a user from the server", permissions: "Ban Members", aliases: "b", arguments: "user, reason", category: "Moderation" },
+      { name: "kick", icon: "logout", description: "Kick a user from the server", permissions: "Kick Members", aliases: "k", arguments: "user, reason", category: "Moderation" },
+      { name: "mute", icon: "volume-off", description: "Mute a user", permissions: "Manage Roles", aliases: "m", arguments: "user, duration", category: "Moderation" },
+      { name: "unmute", icon: "volume-up", description: "Unmute a user", permissions: "Manage Roles", aliases: "um", arguments: "user", category: "Moderation" },
+      { name: "activity", icon: "chart-bar", description: "Shows activity statistics", permissions: "N/A", aliases: "act", arguments: "user, range", category: "Utility" },
+      { name: "purge", icon: "trash", description: "Bulk delete messages", permissions: "Manage Messages", aliases: "prg", arguments: "count", category: "Utility" },
+      { name: "avatar", icon: "user-circle", description: "Get user's avatar", permissions: "N/A", aliases: "av", arguments: "user", category: "Fun" },
+      { name: "joke", icon: "emoji-happy", description: "Tell a random joke", permissions: "N/A", aliases: "jk", arguments: "N/A", category: "Fun" }
+    ];
+
+    function renderCommands() {
+      const filterText = document.getElementById('search').value.toLowerCase();
+      const filterCat = document.getElementById('category-filter').value;
+      const container = document.getElementById('command-list');
+      container.innerHTML = '';
+      commands
+        .filter(cmd => (cmd.name.includes(filterText) || cmd.description.toLowerCase().includes(filterText))
+          && (filterCat === 'All' || cmd.category === filterCat))
+        .forEach(cmd => {
+          const commandCard = document.createElement('div');
+          commandCard.className = 'p-4 bg-gray-800 rounded-lg shadow-md';
+          commandCard.innerHTML = `
+            <h2 class="text-xl font-bold mb-2">${cmd.name}</h2>
+            <p class="text-gray-400 mb-2">${cmd.description}</p>
+            <p class="text-sm text-gray-500">Category: ${cmd.category}</p>
+          `;
+          container.appendChild(commandCard);
+        });
+    }
+
+    document.getElementById('search').addEventListener('input', renderCommands);
+    document.getElementById('category-filter').addEventListener('change', renderCommands);
+
+    // Initial render
+    renderCommands();
+  </script>
+</body>
+</html>
+
