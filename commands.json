@@ -1,0 +1,33 @@
+[
+    {
+      "name": ",ban",
+      "description": "Ban a user from the server.",
+      "aliases": ["b", "banish"],
+      "category": "moderation"
+    },
+    {
+      "name": ",mute",
+      "description": "Mute a user so they can't send messages.",
+      "aliases": ["m"],
+      "category": "moderation"
+    },
+    {
+      "name": ",ping",
+      "description": "Check bot latency.",
+      "aliases": ["p"],
+      "category": "utility"
+    },
+    {
+      "name": ",kick",
+      "description": "Kick a user from the server.",
+      "aliases": ["k"],
+      "category": "moderation"
+    },
+    {
+      "name": ",userinfo",
+      "description": "Get detailed info about a user.",
+      "aliases": ["whois", "uinfo"],
+      "category": "utility"
+    }
+  ]
+  
