@@ -1,189 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lead Bot Commands</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
+    /* === Base Styling === */
+    * {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
       background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      color: white;
+      color: #ffffff;
+      min-height: 100vh;
+      background-attachment: fixed;
       overflow-x: hidden;
     }
 
     header {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px;
-      background-color: rgba(0,0,0,0.8);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      border-bottom: 1px solid #2c3e50;
     }
 
-    header img {
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 40px;
       height: 40px;
       border-radius: 50%;
     }
 
-    nav {
-      display: flex;
-      gap: 20px;
-    }
-
     nav a {
       color: white;
+      margin-left: 20px;
       text-decoration: none;
-      font-weight: bold;
+      font-weight: 600;
+      transition: color 0.3s;
     }
 
-    .container {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
+    nav a:hover {
+      color: #1abc9c;
     }
 
-    .search-bar {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 6px;
+    .search-container {
+      margin: 2rem auto;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .search-container input {
+      width: 80%;
+      padding: 12px 16px;
       border: none;
-      margin-bottom: 30px;
+      border-radius: 30px;
+      font-size: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+      outline: none;
     }
 
-    .commands-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    .commands-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      display: flex;
+      flex-wrap: wrap;
       gap: 20px;
+      justify-content: center;
     }
 
-    .command {
-      background-color: rgba(255,255,255,0.05);
-      border-radius: 12px;
+    .command-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
       padding: 20px;
+      flex: 1 1 300px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease;
       position: relative;
-      border-left: 4px solid #4fc3f7;
     }
 
-    .command h3 {
-      margin-top: 0;
-      font-size: 1.2rem;
+    .command-card:hover {
+      transform: translateY(-5px);
     }
 
-    .command p {
-      margin: 5px 0;
+    .command-card h3 {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .command-card p {
+      font-size: 0.9rem;
       color: #ccc;
     }
 
     .copy-btn {
       position: absolute;
-      top: 15px;
-      right: 15px;
-      background-color: #4fc3f7;
+      top: 16px;
+      right: 16px;
+      background-color: #1abc9c;
       border: none;
-      color: black;
+      color: white;
       padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 8px;
       font-size: 0.8rem;
+      cursor: pointer;
     }
 
-    .category {
-      display: inline-block;
-      background-color: #222;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      margin-top: 5px;
-      color: #4fc3f7;
-    }
-
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
       header {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 1rem;
       }
-      nav {
-        margin-top: 10px;
-        flex-wrap: wrap;
+
+      .search-container input {
+        width: 95%;
       }
     }
   </style>
 </head>
+
 <body>
   <header>
-    <img src="assets/logo.png" alt="Bot Logo">
-    <nav>
-      <a href="#">Commands</a>
-      <a href="#">Docs</a>
-      <a href="#">Status</a>
-      <a href="#">FAQ</a>
-    </nav>
-  </header>
-
-  <div class="container">
-    <input type="text" id="search" class="search-bar" placeholder="Search commands or aliases...">
-
-    <div id="commands-container" class="commands-list">
-      <!-- Command cards will load here -->
+    <div class="logo"> <img src="logo.png" alt="Logo">
+      <h2>Lead Bot</h2>
     </div>
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('search');
-      const commandsContainer = document.getElementById('commands-container');
-
-      fetch('commands.json')
-        .then(response => response.json())
-        .then(commands => {
-          const displayCommands = (filtered) => {
-            commandsContainer.innerHTML = '';
-            filtered.forEach(cmd => {
-              const div = document.createElement('div');
-              div.classList.add('command');
-
-              const title = document.createElement('h3');
-              title.textContent = cmd.name;
-
-              const desc = document.createElement('p');
-              desc.textContent = cmd.description;
-
-              const aliases = document.createElement('p');
-              aliases.textContent = 'Aliases: ' + cmd.aliases.join(', ');
-
-              const category = document.createElement('div');
-              category.className = 'category';
-              category.textContent = cmd.category;
-
-              const copyBtn = document.createElement('button');
-              copyBtn.className = 'copy-btn';
-              copyBtn.textContent = 'Copy';
-              copyBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(cmd.name);
-                copyBtn.textContent = 'Copied!';
-                setTimeout(() => copyBtn.textContent = 'Copy', 2000);
-              });
-
-              div.append(title, desc, aliases, category, copyBtn);
-              commandsContainer.appendChild(div);
-            });
-          };
-
-          searchInput.addEventListener('input', () => {
-            const val = searchInput.value.toLowerCase();
-            const filtered = commands.filter(cmd =>
-              cmd.name.toLowerCase().includes(val) ||
-              cmd.aliases.some(alias => alias.toLowerCase().includes(val))
-            );
-            displayCommands(filtered);
-          });
-
-          displayCommands(commands);
-        });
-    });
-  </script>
+    <nav> <a href="#">Home</a> <a href="#">Commands</a> <a href="#">Docs</a> <a href="#">Support</a> </nav>
+  </header>
+  <div class="search-container"> <input type="text" id="search" placeholder="Search commands or aliases..."> </div>
+  <div class="commands-container" id="commands-list"> <!-- Command cards will be injected here --> </div>
+  <script> async function fetchCommands() { const res = await fetch('commands.json'); const data = await res.json(); displayCommands(data.commands); } function displayCommands(commands) { const list = document.getElementById('commands-list'); list.innerHTML = ''; commands.forEach(cmd => { const card = document.createElement('div'); card.className = 'command-card'; card.innerHTML = ` <button class="copy-btn" onclick="copyCommand('${cmd.name}')">Copy</button> <h3><img src="${cmd.icon}" width="20"/> ${cmd.name}</h3> <p>${cmd.description}</p> `; list.appendChild(card); }); } function copyCommand(name) { navigator.clipboard.writeText(name); alert(`Copied command: ${name}`); } document.getElementById('search').addEventListener('input', async (e) => { const search = e.target.value.toLowerCase(); const res = await fetch('commands.json'); const data = await res.json(); const filtered = data.commands.filter(cmd => cmd.name.toLowerCase().includes(search) || (cmd.aliases && cmd.aliases.some(alias => alias.toLowerCase().includes(search)))); displayCommands(filtered); }); fetchCommands(); </script>
 </body>
+
 </html>
