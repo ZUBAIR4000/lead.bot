@@ -1,33 +1,121 @@
 [
-    {
-      "name": ",ban",
-      "description": "Ban a user from the server.",
-      "aliases": ["b", "banish"],
-      "category": "moderation"
-    },
-    {
-      "name": ",mute",
-      "description": "Mute a user so they can't send messages.",
-      "aliases": ["m"],
-      "category": "moderation"
-    },
-    {
-      "name": ",ping",
-      "description": "Check bot latency.",
-      "aliases": ["p"],
-      "category": "utility"
-    },
-    {
-      "name": ",kick",
-      "description": "Kick a user from the server.",
-      "aliases": ["k"],
-      "category": "moderation"
-    },
-    {
-      "name": ",userinfo",
-      "description": "Get detailed info about a user.",
-      "aliases": ["whois", "uinfo"],
-      "category": "utility"
-    }
-  ]
-  
+  {
+    "name": ",botinfo",
+    "category": "utiliy",
+    "aliases": ["bi"],
+    "description": "Displays info about the bot.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",uwulock",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "uwu locks a user for 15 minutes.",
+    "permissions": ["Manage Webhooks"]
+  },
+  {
+    "name": ",prefix",
+    "category": "server",
+    "aliases": ["N/A"],
+    "description": "View or set the server prefix.",
+    "permissions": ["Administrator"]
+  },
+  {
+    "name": ",ping",
+    "category": "utiliy",
+    "aliases": ["N/A"],
+    "description": "Check bots ping.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",avatar",
+    "category": "utiliy",
+    "aliases": ["av"],
+    "description": "displays a users avatar.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",banner",
+    "category": "utiliy",
+    "aliases": ["N/A"],
+    "description": "displays a users profile banner.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",serveravatar",
+    "category": "utiliy",
+    "aliases": ["sav"],
+    "description": "displays a users server avatar.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",waifu",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "shows a random waifu from database.",
+    "permissions": ["NSFW Channel ⚠"]
+  },
+  {
+    "name": ",porn",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "shows a random porn gif from the database.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",typingsnipe",
+    "category": "snipe",
+    "aliases": ["ts"],
+    "description": "shows the most recent user who stopped typing in the channel.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",purge",
+    "category": "moderation",
+    "aliases": ["clear"],
+    "description": "deletes a specified amount of messages.",
+    "permissions": ["Manage Messages"]
+  },
+  {
+    "name": ",serveravatar",
+    "category": "utiliy",
+    "aliases": ["sav"],
+    "description": "displays a users server avatar.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",help",
+    "category": "utiliy",
+    "aliases": ["N/A"],
+    "description": "shows details about a command.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",cum",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "cum on a member.",
+    "permissions": ["NSFW Channel ⚠"]
+  },
+  {
+    "name": ",squirt",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "squirt on a member.",
+    "permissions": ["NSFW Channel ⚠"]
+  },
+  {
+    "name": ",pp",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "estimates a users pp size.",
+    "permissions": ["N/A"]
+  },
+  {
+    "name": ",ship",
+    "category": "fun",
+    "aliases": ["N/A"],
+    "description": "ship yourself with a member.",
+    "permissions": ["N/A"]
+  }
+]
